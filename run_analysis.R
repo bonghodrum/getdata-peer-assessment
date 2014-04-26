@@ -22,9 +22,7 @@ raw_data<-cbind(subject,x,y)
 tidy_data <- data.table(raw_data[ , grep("activity_id|subject_id|.*_mean_|.*_std_",names(raw_data))])
 
 #Adding activity_label column to tidy_data which is more descriptive than the activity_id column
-activity_labels<-read.table("UCI HAR Dataset/activity_labels.txt")
-colnames(activity_labels) <- c("activity_id","activity_name")
-activity_table <- data.table(activity_labels,key="activity_id")
+activity_table <- data.table(read.table("UCI HAR Dataset/activity_labels.txt", col.names=c("activity_id","activity_name")), key="activity_id"))
 tidy_data[,activity_name:=activity_table[activity_id]$activity_name]
 tidy_data[,activity_id:=NULL]
 write.table(tidy_data, file="sensor_means_and_std.tsv", row.names=FALSE, col.names=TRUE, sep="\t", quote=FALSE)
