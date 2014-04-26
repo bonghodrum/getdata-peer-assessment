@@ -30,5 +30,6 @@ tidy_data[,activity_id:=NULL]
 
 #summarizing data by activity and subject_id
 tidy_data_2<-tidy_data[,lapply(.SD,mean),by=list(activity_name,subject_id)]
+write.table(tidy_data_2, file="sensor_means_and_std_by_activity_and_subject.tsv", row.names=FALSE, col.names=TRUE, sep="\t", quote=FALSE)
 
 
