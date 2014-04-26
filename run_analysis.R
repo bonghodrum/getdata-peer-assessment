@@ -27,9 +27,10 @@ colnames(activity_labels) <- c("activity_id","activity_name")
 activity_table <- data.table(activity_labels,key="activity_id")
 tidy_data[,activity_name:=activity_table[activity_id]$activity_name]
 tidy_data[,activity_id:=NULL]
+write.table(tidy_data, file="sensor_means_and_std.tsv", row.names=FALSE, col.names=TRUE, sep="\t", quote=FALSE)
 
 #summarizing data by activity and subject_id
 tidy_data_2<-tidy_data[,lapply(.SD,mean),by=list(activity_name,subject_id)]
-write.table(tidy_data_2, file="sensor_means_and_std_by_activity_and_subject.tsv", row.names=FALSE, col.names=TRUE, sep="\t", quote=FALSE)
+write.table(tidy_data_2, file="sensor_means_and_std_grouped_by_activity_and_subject.tsv", row.names=FALSE, col.names=TRUE, sep="\t", quote=FALSE)
 
 
