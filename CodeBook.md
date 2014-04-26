@@ -10,7 +10,12 @@ https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Datas
     
 ####Step 2: Run run_analysis.R script to generate tidy data sets.
 
-This step will generate two TSV files, sensor_means_and_std.tsv and sensor_means_and_std_grouped_by_activity_and_subject.tsv 
+This step will generate two TSV files:
+
+* sensor_means_and_std.tsv
+* sensor_means_and_std_grouped_by_activity_and_subject.tsv
+
+Code:
 
     source("run_analysis.R")
   
