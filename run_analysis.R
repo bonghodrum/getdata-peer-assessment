@@ -1,5 +1,4 @@
 library(data.table)
-setwd("~/git-repo/getdata-peer-assessment")
 
 #Merging training and testing X files 
 x <- rbind(read.table("UCI HAR Dataset/train/X_train.txt"),read.table("UCI HAR Dataset/test/X_test.txt"))
