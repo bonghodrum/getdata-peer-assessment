@@ -19,7 +19,8 @@ Code:
 
     source("run_analysis.R")
   
-###Variable names for sensor_means_and_std.tsv
+###Variable names of output tidy TSV files.
+
 To create a tidy data set from the UHAR data, I only extracted the mean and std of 
 the original signals were used to estimate variables of the feature vectors:
 
