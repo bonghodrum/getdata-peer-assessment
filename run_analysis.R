@@ -5,7 +5,23 @@ x <- rbind(read.table("UCI HAR Dataset/train/X_train.txt"),read.table("UCI HAR D
 
 #Setting more descriptive names for X columns
 features <-read.table("UCI HAR Dataset/features.txt")
-colnames(x) <- unlist(lapply(tolower(features[,2]), FUN=function(x){x<-gsub("\\-","\\_",x);  gsub("\\(|\\)","",x)}))
+normalize_columns<-function(x) {  
+  x<-tolower(x)
+  x<-gsub("^f","frequency_",x);
+  x<-gsub("^t","time_",x); x
+  x<-gsub("\\-","\\_",x); 
+  x<-gsub("\\,","\\_",x); 
+  x<-gsub("\\(|\\)","_",x); 
+  x<-gsub("body|bodybody","body_",x);
+  x<-gsub("gravity","gravity_",x);
+  x<-gsub("mag","magnitude_",x);
+  x<-gsub("gyro","gyroscope_",x);
+  x<-gsub("acc","acceleration_",x);
+  x<-gsub("jerk","jerk_",x);
+  x<-gsub("(_)+","_",x);
+  x<-gsub("_$","",x);
+}
+colnames(x)<-unlist(lapply(features[,2], FUN=normalize_columns))
 
 #Merging training and testing Y files
 y<- rbind(read.table("UCI HAR Dataset/train/y_train.txt"), read.table("UCI HAR Dataset/test/y_test.txt"))
@@ -19,7 +35,7 @@ colnames(subject) <-c("subject_id")
 raw_data<-cbind(subject,x,y)
 
 #Extracting only columns related to the mean and standard deviation of sensor data to create first tidy data set
-tidy_data <- data.table(raw_data[ , grep("activity_id|subject_id|.*_mean_|.*_std_",names(raw_data))])
+tidy_data <- data.table(raw_data[ , grep("activity_id|subject_id|(^(frequency|time).*(mean|std)(_|$))",names(raw_data))])
 
 #Adding activity_label column to tidy_data which is more descriptive than the activity_id column
 activity_table <- data.table(read.table("UCI HAR Dataset/activity_labels.txt", col.names=c("activity_id","activity_name")), key="activity_id")
